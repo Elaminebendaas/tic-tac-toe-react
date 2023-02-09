@@ -1,14 +1,15 @@
 import { useState } from "react";
 import Square from "./Square"; 
+import Win from "./Win";
 
 
 function Board(){
     const [value, setValue] = useState(Array(9).fill(null))
     const [xTurn, setTurn] = useState(true)
-
+    let stat;
     function setX(x){
         const squares = value.slice();
-        let status
+        
         
         if(xTurn == true){
             if(squares[x] == 'O'){
@@ -17,12 +18,7 @@ function Board(){
             squares[x] = 'X';
             setValue(squares);
             setTurn(false)
-            const winner = calculateWinner(squares)
-            if (winner) {
-                status = "Winner: " + winner;
-            } else {
-                status = "Next player: " + (xTurn ? "X" : "O");
-            }
+            
             new Promise(r => setTimeout(r, 250)).then(() => {
             let oPick = Math.floor(Math.random() * 9);
             while (oPick != 'X') {
@@ -37,6 +33,14 @@ function Board(){
         })
         
         }
+    }
+    const winner = calculateWinner(value)
+            
+    if (winner) {
+        stat = winner;
+        return <Win winner={stat} />
+    } else {
+        stat = "Next player: " + (xTurn ? "X" : "O");
     }
     function calculateWinner(squares) {
         const lines = [
@@ -55,7 +59,7 @@ function Board(){
             return squares[a];
           }
         }
-        return null;
+        return false
       }
     return(
         <>
@@ -75,7 +79,7 @@ function Board(){
                 <Square content={value[7]} click={() =>setX(7)}/>
                 <Square content={value[8]} click={() =>setX(8)}/>
             </div>
-            <h3>{status}</h3>
+            <h3>{stat}</h3>
         </>
     )
 }

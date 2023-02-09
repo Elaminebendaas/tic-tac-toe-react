@@ -77,4 +77,17 @@ a:hover{
 .row{
   display: flex;
 }
-
+.btn{
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  height: 60px;
+  border-radius: 5px;
+  text-align: center;
+  border: 2px solid black;
+  transition: border-color 0.25s;
+}
+.btn:hover {
+  border-color: #646cff;
+}
